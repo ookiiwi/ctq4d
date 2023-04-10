@@ -1,0 +1,8 @@
+name: CTQReader
+description: Binding of `headers/ctq_reader.h`
+output:
+  bindings: '../lib/generated/reader.g.dart'
+
+headers:
+  entry-points:
+    - '../headers/ctq_reader.h'
