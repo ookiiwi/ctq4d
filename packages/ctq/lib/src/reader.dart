@@ -13,6 +13,8 @@ void loadLibctq(DynamicLibrary lib) {
   reader ??= g.CTQReader(lib);
 }
 
+typedef CTQFindResult = List<MapEntry<String, List<int>>>;
+
 class CTQReader {
   late Pointer<g.ctq_ctx> _ctx;
 
@@ -63,23 +65,26 @@ class CTQReader {
     reader!.ctq_destroy_reader(_ctx);
   }
 
-  List<MapEntry<String, List<int>>> find(String keyword,
-      {bool exactMatch = false,
-      int offset = 0,
+  CTQFindResult find(String keyword,
+      {int offset = 0,
       int count = 20,
-      int pathIdx = 0}) {
+      int pathIdx = 0,
+      String filter = "",
+      int filterPathIdx = 0}) {
     _checkLibIsLoaded();
 
     final ret = <MapEntry<String, List<int>>>[];
 
     using((arena) {
+      print('search for $keyword with $filter');
       var rv = reader!.ctq_find(
         _ctx,
         keyword.toNativeUtf8().cast(),
-        exactMatch,
         offset,
         count,
         pathIdx,
+        filter.toNativeUtf8().cast(),
+        filterPathIdx,
       );
 
       if (rv == nullptr) {
