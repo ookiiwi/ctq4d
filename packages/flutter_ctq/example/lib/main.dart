@@ -8,7 +8,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 late final String ctqFileDir;
-const filename = 'jpn-eng-2023.3.14.dico';
+const filename = 'jpn-eng.dico';
 
 Future<void> copyFile(String filename) async {
   var data = (await rootBundle.load(join('assets', filename)));
