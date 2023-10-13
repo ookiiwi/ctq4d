@@ -30,4 +30,6 @@ A new Flutter plugin project.
 
   s.dependency 'Flutter'
   s.platform = :ios, '9.0'
+
+  s.ios.deployment_target = '11.0'
 end
