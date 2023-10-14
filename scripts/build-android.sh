@@ -21,7 +21,7 @@ ANDROID_NDK=$( find "$NDK_HOME" -maxdepth 1 -type d | sort -V | tail -1 )
 for ABI in arm64-v8a x86_64; do
     CMAKE_BUILD_DIR=build/android/$ABI
 
-    cmake -H../../ctq -B$CMAKE_BUILD_DIR \
+    cmake -H`pwd`/../third-party/ctq -B$CMAKE_BUILD_DIR \
         -DANDROID_ABI=$ABI \
         -DANDROID_PLATFORM=android-26 \
         -DANDROID_NDK=$ANDROID_NDK \

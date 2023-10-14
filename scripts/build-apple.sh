@@ -9,8 +9,8 @@ LIBNAME=libctq.a
 for TARGET in OS64 SIMULATOR64 SIMULATORARM64; do
     IOS_BUILD_DIR=build/ios/$TARGET
 
-    cmake -S../../ctq -B$IOS_BUILD_DIR -GXcode \
-        -DCMAKE_TOOLCHAIN_FILE=`pwd`/../ios-cmake/ios.toolchain.cmake \
+    cmake -S`pwd`/../third-party/ctq -B$IOS_BUILD_DIR -GXcode \
+        -DCMAKE_TOOLCHAIN_FILE=`pwd`/../third-party/ios-cmake/ios.toolchain.cmake \
         -DPLATFORM=$TARGET \
         -DENABLE_VISIBILITY=True \
         -DBUILD_TESTING=OFF \
@@ -24,8 +24,7 @@ for TARGET in OS64 SIMULATOR64 SIMULATORARM64; do
 
     libtool -static -o $IOS_DIR/$LIBNAME  \
         $IOS_BUILD_DIR/Release-iphone*/$LIBNAME \
-        $IOS_BUILD_DIR/third-party/lz4/build/cmake/Release-iphone*/liblz4.a \
-        $IOS_BUILD_DIR/third-party/sdsl-lite/lib/Release-iphone*/libsdsl.a
+        $IOS_BUILD_DIR/third-party/lz4/build/cmake/Release-iphone*/liblz4.a
 done
 
 FRAMEWORK="Ctq.xcframework"
@@ -45,5 +44,5 @@ zip -r $FRAMEWORK.zip $FRAMEWORK
 # Cleanup
 rm -rf ios-*-ar ios-sim-lipo $FRAMEWORK
 
-cp $FRAMEWORK.zip ../packages/flutter_ctq/ios/Frameworks/
-cp ../../ctq/include/ctq_reader.h ../packages/flutter_ctq/ios/Classes/
+mkdir -p `pwd`/../packages/flutter_ctq/ios/Frameworks/ && cp $FRAMEWORK.zip $_
+cp -o "`pwd`/../third-party/ctq/include/ctq_reader.h" "`pwd`/../packages/flutter_ctq/ios/Classes/ctq_reader.h"
